@@ -54,29 +54,24 @@ odp$zad5 <- as.numeric(t_test$conf.int)
 # 180cm wynosi 25% za pomocą polecenia prop.test
 
 mezczyzna <- waga$plec == 0
-ponad_180cm <- waga$Wzrost > 180
-waga_mezczyzna_180 <- waga[mezczyzna & ponad_180cm, ]
-waga_mezczyzna_180
+mezczyzni <- waga[mezczyzna, ]
 
-p_test <- prop.test(x = nrow(waga_mezczyzna_180),
-          n = nrow(waga),
-          p = 0.25
-          )
-p_test
-p_test$p.value
-# 0.002102402 < 0.05 zatem odrzucam
-odp$zad6 <- c(p_test$p.value, "odrzucam")
+liczba_wysokich <- sum(mezczyzni$Wzrost > 180) 
+liczba_wszystkich <- nrow(mezczyzni)
+
+test_6 <- prop.test(liczba_wysokich, liczba_wszystkich, p = 0.25)
+test_6$p.value
+# 0.630954 > 0.05 zatem dane są zgodne z hipotezą
+odp$zad6 <- c(test_6$p.value, "dane są zgodne z hipotezą")
 
 
 # 7. Wyznaczyć przedział ufności dla proporcji studentów (płci męskiej) wyższych
 # niż 180cm na poziomie ufności 96%.
 
-t_test <- t.test(waga_mezczyzna_180, conf.level = 0.96)
-t_test
-t_test$conf.int
-as.numeric(t_test$conf.int)
-# 64.45875 107.72306
-odp$zad7 <- as.numeric(t_test$conf.int)
+test_7 <- prop.test(liczba_wysokich, liczba_wszystkich, conf.level = 0.96)
+as.numeric(test_7$conf.int)
+# 0.1120782 0.3576638
+odp$zad7 <- as.numeric(test_7$conf.int)
 
 
 odp
