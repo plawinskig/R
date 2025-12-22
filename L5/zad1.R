@@ -144,14 +144,14 @@ e_policz_statystyke <- function(hipoteza)
   
   statystyka <- (sr_proby - hipoteza) / SE
   
-  return (statystyka)
+  return (abs(statystyka))
 }
 
 # i) testu Z, 
 
 e_test_Z <- function(hipoteza)
 {
-  return (2 * pnorm(e_policz_statystyke(hipoteza)))
+  return (2 * (1 - pnorm(e_policz_statystyke(hipoteza))))
 }
 e_test_Z(e_hipoteza) # 6.334248e-05 < 0.05 - odrzucam
 odp$e_i <- c(e_test_Z(e_hipoteza), "odrzucam")
@@ -160,7 +160,7 @@ odp$e_i <- c(e_test_Z(e_hipoteza), "odrzucam")
 
 e_test_T <- function(hipoteza)
 {
-  return (2 * pt(e_policz_statystyke(hipoteza), df = liczebnosc_proby - 1))
+  return (2 * (1 - pt(e_policz_statystyke(hipoteza), df = liczebnosc_proby - 1)))
 }
 e_test_T(e_hipoteza) # 0.0001222515 < 0.05 - odrzucam
 odp$e_ii <- c(e_test_T(e_hipoteza), "odrzucam")
