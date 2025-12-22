@@ -41,3 +41,8 @@ prop.test(x = liczba_sukcesów,
 
 t.test(c(1,2,3,4), mu = 3)    
     
+# Jeśli p < 0.05 -> Odrzucamy hipotezę (np. "Średnia NIE wynosi 170").
+# Jeśli p > 0.05 -> Nie ma podstaw do odrzucenia 
+# (Mówimy: "Dane są zgodne z hipotezą", a nie "Udowodniliśmy hipotezę"!).
+
+
