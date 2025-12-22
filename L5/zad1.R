@@ -22,10 +22,10 @@ a_test_Z <- function(hipoteza)
   
   Z <- (procent_powyzej_115 - hipoteza) / SE
   
-  return (Z^2)
+  return (2 * (1 - pnorm(abs(Z))))
 }
-
-odp$a_i <- a_test_Z(a_hipoteza)
+a_test_Z(a_hipoteza) # 0.2945074 > 0.05 - dane są zgodne z hipotezą
+odp$a_i <- c(a_test_Z(a_hipoteza), "dane są zgodne z hipotezą")
 
 # ii) za pomocą polecenia prop.test
 
@@ -37,9 +37,10 @@ a_prop_test <- function(hipoteza)
                       correct = FALSE
   )
 
-  return (as.numeric(p_test$statistic))
+  return (p_test$p.value)
 }
-odp$a_ii <- a_prop_test(a_hipoteza)
+a_prop_test(a_hipoteza) # 0.2945074 > 0,05 - dane są zgodne z hipotezą
+odp$a_ii <- c(a_prop_test(a_hipoteza), "dane są zgodne z hipotezą")
 
 odp$a_i
 odp$a_ii
@@ -152,7 +153,8 @@ e_test_Z <- function(hipoteza)
 {
   return (2 * pnorm(e_policz_statystyke(hipoteza)))
 }
-odp$e_i <- e_test_Z(e_hipoteza)
+e_test_Z(e_hipoteza) # 6.334248e-05 < 0.05 - odrzucam
+odp$e_i <- c(e_test_Z(e_hipoteza), "odrzucam")
 
 # ii) testu T (studenta).
 
@@ -160,7 +162,8 @@ e_test_T <- function(hipoteza)
 {
   return (2 * pt(e_policz_statystyke(hipoteza), df = liczebnosc_proby - 1))
 }
-odp$e_ii <- e_test_T(e_hipoteza)
+e_test_T(e_hipoteza) # 0.0001222515 < 0.05 - odrzucam
+odp$e_ii <- c(e_test_T(e_hipoteza), "odrzucam")
 
 odp$e_i
 odp$e_ii
