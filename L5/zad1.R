@@ -6,6 +6,7 @@ var_proby <- 225
 std_proby <- sqrt(var_proby)
 ile_powyzej_115 <- 30
 
+odp <- list()
 
 # a) Przetestować hipotezę, że 35% wszystkich studentów ma IQ wyższy niż 115 
 a_hipoteza <- 0.35
@@ -24,7 +25,7 @@ a_test_Z <- function(hipoteza)
   return (Z^2)
 }
 
-a_wynik_recznie <- a_test_Z(a_hipoteza)
+odp$a_i <- a_test_Z(a_hipoteza)
 
 # ii) za pomocą polecenia prop.test
 
@@ -38,10 +39,10 @@ a_prop_test <- function(hipoteza)
 
   return (as.numeric(p_test$statistic))
 }
-a_wynik_automat <- a_prop_test(a_hipoteza)
+odp$a_ii <- a_prop_test(a_hipoteza)
 
-a_wynik_recznie
-a_wynik_automat
+odp$a_i
+odp$a_ii
 
 
 # b) Wyznaczyć przedział ufności dla proporcji wszystkich studentów mającej
@@ -69,7 +70,7 @@ b_prz_ufn_dla_proporcji <- function(poziom_ufnosci)
   return(przedzial_ufnosci)
 }
 
-b_wynik_recznie <- b_prz_ufn_dla_proporcji(b_poziom_ufnosci)
+odp$b_i <- b_prz_ufn_dla_proporcji(b_poziom_ufnosci)
 
 # ii) prop.test
 
@@ -83,10 +84,10 @@ b_prop_test <- function(hipoteza)
   
   return (as.numeric(p_test$conf.int))
 }
-b_wynik_automat <- b_prop_test(a_hipoteza)
+odp$b_ii <- b_prop_test(a_hipoteza)
 
-b_wynik_automat
-b_wynik_recznie
+odp$b_i
+odp$b_ii
 
 # c) Wyznaczyć przedział ufności dla średniego IQ wszystkich studentów na
 # poziomie ufności 
@@ -112,7 +113,7 @@ c_prz_ufn_dla_sredniej <- function(poziom_ufnosci)
 
   return(cd_oblicz_przedzial(poziom_ufnosci, kwantyl))
 }
-c_wynik <- c_prz_ufn_dla_sredniej(c_poziom_ufnosci)
+odp$c <- c_prz_ufn_dla_sredniej(c_poziom_ufnosci)
 
 # d) Wyznaczyć przedział ufności dla średniego IQ wszystkich studentów na
 # poziomie ufności 90% w oparciu o wartość krytyczną dla rozkładu
@@ -127,10 +128,10 @@ d_prz_ufn_t_student <- function(poziom_ufnosci)
   
   return(cd_oblicz_przedzial(poziom_ufnosci, kwantyl))
 }
-d_wynik <- d_prz_ufn_t_student(d_poziom_ufnosci)
+odp$d <- d_prz_ufn_t_student(d_poziom_ufnosci)
 
-c_wynik
-d_wynik
+odp$c
+odp$d
 
 # e) Przetestować hipotezę, że średni IQ studentów wynosi 115. Wyznaczyć
 # odpowiednią wartość p za pomocą 
@@ -151,7 +152,7 @@ e_test_Z <- function(hipoteza)
 {
   return (2 * pnorm(e_policz_statystyke(hipoteza)))
 }
-e_wynik_recznie <- e_test_Z(e_hipoteza)
+odp$e_i <- e_test_Z(e_hipoteza)
 
 # ii) testu T (studenta).
 
@@ -159,19 +160,12 @@ e_test_T <- function(hipoteza)
 {
   return (2 * pt(e_policz_statystyke(hipoteza), df = liczebnosc_proby - 1))
 }
-e_wynik_automat <- e_test_T(e_hipoteza)
+odp$e_ii <- e_test_T(e_hipoteza)
 
-e_wynik_recznie
-e_wynik_automat
+odp$e_i
+odp$e_ii
 
 # if p is low the null must go
 
-a_wynik_automat
-a_wynik_recznie
-b_wynik_automat
-b_wynik_recznie
-c_wynik
-d_wynik
-e_wynik_automat
-e_wynik_recznie
 
+odp
