@@ -70,7 +70,7 @@ odp$zad6 <- c(test_6$p.value, "dane są zgodne z hipotezą")
 
 test_7 <- prop.test(liczba_wysokich, liczba_wszystkich, conf.level = 0.96)
 as.numeric(test_7$conf.int)
-# 0.1120782 0.3576638
+# (0.1120782, 0.3576638)
 odp$zad7 <- as.numeric(test_7$conf.int)
 
 
