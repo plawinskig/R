@@ -1,8 +1,20 @@
 odp <- list()
-fail <- structure("odrzucam", names = "wniosek")
-succ <- structure("dane są zgodne z hipotezą", names ="wniosek")
+
 p_val_name <- "p-value"
 Z_name <- "Z-squared"
+
+ocen <- function(wek)
+{
+  print(wek[2])
+  if(wek[2] < 0.05)
+  {
+    return (c(wek, structure("odrzucam", names = "wniosek")))
+  }
+  else
+  {
+    return (c(wek, structure("dane są zgodne z hipotezą", names ="wniosek")))
+  }
+}
 
 # a. 220 z 520 kobiet ma wyższe wykształcenie, a 165 z 480 mężczyzn, z który. 
 # Przetestować hipotezę, 
@@ -32,8 +44,8 @@ a_test_Z <- function()
   
   c(Z^2, p_val)
 }
-a_test_Z() # p = 0.01 < 0.05 -> odrzucam - wyksztalcenie zależy od płci
-odp$a_i <- c(a_test_Z(), fail)
+
+odp$a_i <- ocen(a_test_Z())
 
 # ii) polecenia „prop.test”.
 
@@ -48,8 +60,7 @@ a_prop_test <- function()
   c(p_test$statistic, p_val)
 }
 
-a_prop_test() # p = 0.01 < 0.05 odrzucam
-odp$a_ii <- c(a_prop_test(), fail)
+odp$a_ii <- ocen(a_prop_test())
 
 # b. Stworzyć tablicę rozdzielczą (2 × 2) 
 # przedstawiającą frekwencje wszystkich możliwych
@@ -88,24 +99,20 @@ c_chisq_test <- function()
   c(c_test$statistic, p_val)
 }
 
-c_chisq_test()
-# p-value = 0.01001 < 0.05 - odrzucam
-odp$c_i <- c(c_chisq_test(), fail)
+odp$c_i <- ocen(c_chisq_test())
 
 # ii) polecenia „fisher.test”.
 
 c_fisher_test <- function()
 {
   f_test <- fisher.test(b_tablica_rozdzielcza())
-  
+
   p_val <- structure(f_test$p.value, names = p_val_name)
-  
-  c(f_test$statistic, p_val)
+
+  c(NA, p_val)
 }
 
-c_fisher_test()
-# p-value = 0.01117571 < 0.05 - odrzucam
-odp$c_ii <- c(c_fisher_test(), fail)
+odp$c_ii <- ocen(c_fisher_test())
 
 # d. Średni wzrost tych 520 kobiet wynosi 166cm, a wariancja 100cm2. 
 # Średni wzrost tych 480 mężczyzn wynosi 174cm, a wariancja 121cm2. 
@@ -129,9 +136,7 @@ d_test_Z <- function()
   c(Z^2, p_val)
 }
 
-d_test_Z()
-# p -> 0, Z - ogromne - duza zaleznosc
-odp$d <- c(d_test_Z(), fail)
+odp$d <- ocen(d_test_Z())
 
 #odp
 odp
