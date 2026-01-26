@@ -11,8 +11,8 @@ chisq.test(
 # tabela teoretyczna vs podana
 # oczekiwane frekwencje (expected freqencies)
 # dla komórki i,j:
-
 # Eij = row_sum * col_sum / total_sum
+
 tabela <- table(c(4,5,3,4,4,2,5,3,4,5))
 tabela <- table(rpois(100,5))
 chisq.test(tabela)
